@@ -5,6 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import io.homeassistant.companion.android.HAStartDestinationRoute
+import io.homeassistant.companion.android.onboarding.serverdiscovery.navigation.navigateToServerDiscovery
+import io.homeassistant.companion.android.onboarding.serverdiscovery.navigation.navigateToServerDiscoveryHelp
+import io.homeassistant.companion.android.onboarding.serverdiscovery.navigation.serverDiscoveryScreen
 import io.homeassistant.companion.android.onboarding.welcome.navigation.WelcomeRoute
 import io.homeassistant.companion.android.onboarding.welcome.navigation.navigateToLearnMore
 import io.homeassistant.companion.android.onboarding.welcome.navigation.welcomeScreen
@@ -29,8 +32,16 @@ internal fun NavGraphBuilder.onboarding(
 ) {
     navigation<OnboardingRoute>(startDestination = WelcomeRoute) {
         welcomeScreen(
-            onConnectClick = {},
+            onConnectClick = navController::navigateToServerDiscovery,
             onLearnMoreClick = navController::navigateToLearnMore,
+        )
+        serverDiscoveryScreen(
+            onConnectClick = {
+                // TODO navigate to connection with URL
+            },
+            onBackClick = navController::popBackStack,
+            onHelpClick = navController::navigateToServerDiscoveryHelp,
+            onManualSetupClick = {}, // TODO navigate to manual setup
         )
     }
 }
